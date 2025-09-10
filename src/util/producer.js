@@ -95,6 +95,11 @@ const connectAll = async (configs) => {
         await producer.connect()
         Logger.isDebugEnabled && Logger.debug('Producer::connect::end')
         listOfProducers[config.topicConfig.topicName] = producer
+
+         // Catch errors here to ensure we don't end up with rejected promises
+        producer.on('error', error => {
+          Logger.isErrorEnabled && Logger.error(`Producer::error - consumer threw error: ${error.message}`)
+        })
       }
     } catch (err) {
       Logger.isErrorEnabled && Logger.error(err)

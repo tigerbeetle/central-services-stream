@@ -68,6 +68,11 @@ const createHandler = async (topicName, config, command) => {
     autoCommitEnabled = config.rdkafkaConf.enableAutoCommit
   }
 
+  // Catch errors here to ensure we don't end up with rejected promises
+  consumer.on('error', error => {
+    Logger.isErrorEnabled && Logger.error(`Consumer::error - consumer threw error: ${error.message}`)
+  })
+
   let connectedTimeStamp = 0
   try {
     await consumer.connect()

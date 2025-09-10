@@ -317,7 +317,7 @@ class Consumer extends EventEmitter {
 
       this._consumer.on('event.error', error => {
         Logger.isDebugEnabled && logger.debug(`Consumer::onEventError  - ${JSON.stringify(error)}`)
-        super.emit('error', error)
+        // super.emit('error', error)
       })
 
       this._consumer.on('event.throttle', eventData => {
@@ -336,7 +336,7 @@ class Consumer extends EventEmitter {
 
       this._consumer.on('error', error => {
         Logger.isDebugEnabled && logger.debug(`Consumer::onError - ${JSON.stringify(error)}`)
-        super.emit('error', error)
+        // super.emit('error', error)
       })
 
       this._consumer.on('partition.eof', eof => {
@@ -366,7 +366,7 @@ class Consumer extends EventEmitter {
       Logger.isSillyEnabled && logger.silly('Consumer::connect() - Connecting...')
       this._consumer.connect(null, (error, metadata) => {
         if (error) {
-          super.emit('error', error)
+          // super.emit('error', error)
           Logger.isSillyEnabled && logger.silly('Consumer::connect() - end')
           return reject(error)
         }
@@ -558,7 +558,7 @@ class Consumer extends EventEmitter {
       this._consumer.consume(batchSize, (error, messages) => {
         if (error || !messages.length) {
           if (error) {
-            super.emit('error', error)
+            // super.emit('error', error)
             logger.error(`Consumer::_consumerPoller() - ERROR - ${error}`)
           } else {
             Logger.isSillyEnabled && logger.silly('Consumer::_consumerPoller() - POLL EMPTY PING')
@@ -627,7 +627,7 @@ class Consumer extends EventEmitter {
     this._consumer.consume(batchSize, (error, messages) => {
       if (error || !messages.length) {
         if (error) {
-          super.emit('error', error)
+          // super.emit('error', error)
         }
         if (this._status.running) {
           return setTimeout(() => {
@@ -712,7 +712,7 @@ class Consumer extends EventEmitter {
     this._consumer.consume((error, message) => {
       if (error || !message) {
         if (error) {
-          super.emit('error', error)
+          // super.emit('error', error)
         }
       } else {
         const parsedValue = this._config.options.deserializeFn(message.value, this._config.options)
