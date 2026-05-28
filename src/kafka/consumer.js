@@ -426,6 +426,7 @@ class Consumer extends EventEmitter {
       clearInterval(this._pollInterval)
     }
     this._status.running = false
+    this._consumer.removeAllListeners()
     this._consumer.disconnect(cb)
     logger.silly('Consumer::disconnect() - end')
   }
