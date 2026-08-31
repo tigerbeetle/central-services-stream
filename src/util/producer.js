@@ -47,7 +47,7 @@ let producerHealthTimerMs = 10000
 /**
  * Get the current producer health timer duration in ms.
  */
-function getProducerHealthTimerMs () {
+function getProducerHealthTimerMs() {
   return producerHealthTimerMs
 }
 
@@ -55,7 +55,7 @@ function getProducerHealthTimerMs () {
  * Set the producer health timer duration in ms.
  * @param {number} ms
  */
-function setProducerHealthTimerMs (ms) {
+function setProducerHealthTimerMs(ms) {
   producerHealthTimerMs = ms
 }
 
@@ -221,6 +221,15 @@ const getProducer = (topicName) => {
 }
 
 /**
+ * @function getListOfTopics
+ * @description Get a list of topics that the producer has connected to.
+ * @returns {Array<string>} - list of topics
+ */
+const getListOfTopics = () => {
+  return Object.keys(listOfProducers)
+}
+
+/**
  * @function isConnected
  *
  * @param {string} topicName - the topic name of the producer to check
@@ -309,11 +318,12 @@ const allConnected = async () => {
 
 module.exports = {
   getProducer,
+  getListOfTopics,
   produceMessage,
   disconnect,
   isConnected,
   allConnected,
   connectAll,
   getProducerHealthTimerMs,
-  setProducerHealthTimerMs
+  setProducerHealthTimerMs,
 }

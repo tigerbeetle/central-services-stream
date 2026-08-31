@@ -52,7 +52,7 @@ let consumerHealthTimerMs = 10000
 /**
  * Get the current consumer health timer duration in ms.
  */
-function getConsumerHealthTimerMs () {
+function getConsumerHealthTimerMs() {
   return consumerHealthTimerMs
 }
 
@@ -60,7 +60,7 @@ function getConsumerHealthTimerMs () {
  * Set the consumer health timer duration in ms.
  * @param {number} ms
  */
-function setConsumerHealthTimerMs (ms) {
+function setConsumerHealthTimerMs(ms) {
   consumerHealthTimerMs = ms
 }
 
@@ -69,7 +69,7 @@ function setConsumerHealthTimerMs (ms) {
  * If an error occurs, sets a timer for consumerHealthTimerMs to mark unhealthy.
  * Any successful consume clears the timer and marks healthy.
  */
-function consumeWithHealthTracking (consumer, topicName, command) {
+function consumeWithHealthTracking(consumer, topicName, command) {
   // Wrap the original command to track health
   const wrappedCommand = async (error, messages) => {
     if (error) {
@@ -185,10 +185,7 @@ const isConsumerAutoCommitEnabled = (topicName) => {
 
 /**
  * @function getListOfTopics
- *
- *
- * @description Get a list of topics that the consumer has subscribed to
- *
+ * @description Get a list of topics that the consumer has subscribed to.
  * @returns {Array<string>} - list of topics
  */
 const getListOfTopics = () => {
@@ -246,10 +243,12 @@ const getMetadataPromise = (consumer, topic) => {
 }
 
 const disconnectAll = async () => {
-  for (const { consumer } of Object.values(listOfConsumers)) {
+  for (const [topicName, { consumer }] of Object.entries(listOfConsumers)) {
     await new Promise((resolve) => {
       consumer.disconnect(resolve)
     })
+
+    delete listOfConsumers[topicName]
   }
 }
 
